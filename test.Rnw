@@ -1,0 +1,24 @@
+\documentclass{article}
+\title{This is my first document}
+\author{Yossi Gil}
+\date{Hayom yom shishi}
+\begin{document}
+\maketitle
+Hello!
+
+
+
+
+ 
+ 
+
+ 
+ 
+ 
+ ${a \choose b}$
+ 
+
+
+
+
+\end{document}
