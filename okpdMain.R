@@ -11,6 +11,22 @@ if(!require(jsonlite)) {
   install.packages("jsonlite")
   require(jsonlite)
 }
+### CONSTANTS ###
+
+# the result json is surrounded by whitespace. get rid of it
+whitespaceForStartIndex<-9
+
+# keyword for searching the json is 'DeferredJS.addBundles('
+keywordForJSON<-'DeferredJS.addBundles('
+
+# length of the keyword for json for substring offset
+keywordForJSONLength<-nchar('DeferredJS.addBundles(')
+
+# the result json is surrounded by whitespace. get rid of it
+whitespaceForLastIndex<-9
+
+# keyword for finding the end of json
+keywordForEndOfJSON<-');'
 
 ## get the response from okcupid
 okcupidResponse<-httr::GET(url = "https://www.okcupid.com/match", 
@@ -33,15 +49,6 @@ okcupidContent<-content(x = okcupidResponse, type = 'text/html', encoding = 'utf
 # convert the html content into string
 okcupidContentString<-toString(okcupidContent)
 
-# the result json is surrounded by whitespace. get rid of it
-whitespaceForStartIndex<-9
-
-# keyword for searching the json is 'DeferredJS.addBundles('
-keywordForJSON<-'DeferredJS.addBundles('
-
-# length of the keyword for json for substring offset
-keywordForJSONLength<-nchar('DeferredJS.addBundles(')
-
 # the index where the json begins
 startIndex<-regexpr(pattern = keywordForJSON,
                     text = okcupidContentString,
@@ -51,11 +58,6 @@ startIndex<-regexpr(pattern = keywordForJSON,
 okcupidContentString<-substring(text = okcupidContentString, 
                                 first = startIndex,
                                 last = nchar(okcupidContentString))
-# the result json is surrounded by whitespace. get rid of it
-whitespaceForLastIndex<-9
-
-# keyword for finding the end of json
-keywordForEndOfJSON<-');'
 
 # offest the lastIndex with whitespaceForLastIndex
 lastIndex<-regexpr(pattern = keywordForEndOfJSON,
